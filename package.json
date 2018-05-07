@@ -1,0 +1,16 @@
+{
+  "name": "apiary-cli",
+  "version": "1.0.0",
+  "description": "node.js cli for Apiary API",
+  "bin": "./bin/apiary",
+  "main": "./src/cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cristian Dascalu",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "commander": "^2.15.1"
+  }
+}

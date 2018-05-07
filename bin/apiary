@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+
+const info = require('./../package.json');
+const program = require('commander');
+
+const cli = () => {
+    const c = require('../src/cli'); 
+    return new c(program.apiHost, program.bearer);
+};
+
+let stdin = '';
+
+program
+    .version(info.version)
+    .description(info.description)
+    .option('--api-host [apiHost]', 'set the API host for current command', 'https://api.apiary.io')
+    .option('--bearer [bearer]', 'set the authorization token for current command')
+
+program
+    .command('user-api-list')
+    .description("list own APIs from apiary.io")
+    .action(async () => {
+        try {
+            const list = await cli().getUserApiList();
+            console.log(list); 
+            process.exit(0);
+        } catch (error) {
+            console.error(error.message); 
+            process.exit(1);
+        }
+    });
+
+program
+    .command('publish-blueprint <api-subdomain>')
+    .description('publish the API Blueprint on apiary.io')
+    .action(async (apiSubdomain) => {
+        if (!stdin) {
+            console.error('STDIN needed for the API Blueprint document'); 
+            process.exit(1);
+        }
+
+        try {
+            await cli().publishBlueprint(apiSubdomain, stdin);
+            console.log(`API Blueprint [${apiSubdomain}] was published!`); 
+            process.exit(0);
+        } catch (error) {
+            console.error(error.message); 
+            process.exit(1);
+        }
+    });
+
+if (process.stdin.isTTY) {
+    program.parse(process.argv);
+} else {
+    process.stdin.on('data', (chunk) => {
+        stdin += chunk;
+    });
+
+    process.stdin.on('end', () => {
+        program.parse(process.argv);
+    });
+}
