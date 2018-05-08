@@ -1,12 +1,14 @@
 {
   "name": "apiary-cli",
-  "version": "1.0.0",
+  "version": "0.0.0-semantic-release",
   "description": "node.js cli for Apiary API",
   "bin": "./bin/apiary",
   "main": "./src/cli.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "commitmsg": "validate-commit-msg"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "author": "Cristian Dascalu",
   "license": "GPL-3.0",
@@ -16,13 +18,16 @@
   },
   "devDependencies": {
     "commitizen": "^2.9.6",
-    "cz-conventional-changelog": "^2.1.0"
+    "cz-conventional-changelog": "^2.1.0",
+    "husky": "^0.14.3",
+    "semantic-release": "^15.3.1",
+    "validate-commit-msg": "^2.14.0"
   },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
-  }, 
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/cristidas/apiary-cli.git"
